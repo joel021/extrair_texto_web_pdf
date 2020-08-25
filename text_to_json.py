@@ -6,8 +6,8 @@ from googletrans import Translator
 
 class TextToJson():
 
-        def save_json(self, to_path, title,author,body,url):
-                text_json = "{\n    \"title\": \"" + title + "\",\n    \"author\": \"" + author + "\",\n    \"body\": " + body + ",\n    \"type\": \"article\",\n    \"url\": \"" + url + "\"\n}"
+        def save_json(self, to_path, title,author,body,url,type):
+                text_json = "{\n    \"title\": \"" + title + "\",\n    \"author\": \"" + author + "\",\n    \"body\": " + body + ",\n    \"type\": \""+type+"\",\n    \"url\": \"" + url + "\"\n}"
                 file = open(to_path+"/" + title + "-" + author + ".json", "w")
                 file.write(text_json)
                 file.close()
@@ -32,7 +32,7 @@ class TextToJson():
                         title = plan_text[0:10:1]
                         plan_text = json.dumps(plan_text)
 
-                        self.save_json('outputs/pdfs',title,url[1],plan_text,url[0])
+                        self.save_json('outputs/pdfs',title,url[1],plan_text,url[0],url[2])
                         print("feito: {}".format(title))
 
         def from_web(self,input_file_urls, language):
@@ -52,7 +52,7 @@ class TextToJson():
                                 plan_text = self.translate(plan_text)
 
                         plan_text = json.dumps(plan_text)
-                        self.save_json('outputs/web',title,url[1],plan_text,url[0])
+                        self.save_json('outputs/web',title,url[1],plan_text,url[0],url[2])
 
                         print("feito: {}".format(title))
 
@@ -61,7 +61,8 @@ class TextToJson():
                         line = fp.readline()
                         urls = list()
                         while line:
-                                tupla = (line[0:line.index(",")], line[line.index(",") + 1:len(line) - 1])
+                                tupla = (line[0:line.index(",")], line[line.index(",") + 1:line.rindex(",")],
+                                         line[line.rindex(",") + 1:len(line) - 1])
                                 urls.append(tupla)
                                 line = fp.readline()
 

@@ -7,7 +7,7 @@ from googletrans import Translator
 class TextToJson():
 
         def save_json(self, to_path, title,author,body,url):
-                text_json = "{\n    \"title\": \"" + title + "\",\n    \"author\": \"" + author + "\",\n    \"body\": " + body + ",\n    \"type\": \"Artigo\",\n    \"url\": \"" + url + "\"\n}"
+                text_json = "{\n    \"title\": \"" + title + "\",\n    \"author\": \"" + author + "\",\n    \"body\": " + body + ",\n    \"type\": \"article\",\n    \"url\": \"" + url + "\"\n}"
                 file = open(to_path+"/" + title + "-" + author + ".json", "w")
                 file.write(text_json)
                 file.close()

@@ -1,7 +1,0 @@
-https://medium.com/ibm-watson/introducing-watson-machine-learning-server-1-0-dbc2db1f8479,Greg Filla
-https://medium.com/ibm-watson/tagged/watson-machine-learning,Lukasz Cmielowski
-https://towardsdatascience.com/deploy-and-explain-neural-networks-using-ibm-watson-and-openscale-87288d46e6f3?gi=97d9243a36e5,Czako Zoltan
-https://www.journals.elsevier.com/discrete-mathematics,Douglas B. West
-https://www.ibm.com/blogs/watson/2019/10/how-to-get-started-with-natural-language-processing/,Sean Sodha
-https://medium.com/ibm-watson/natural-language-processing-explained-76feb28dc16c,Ethon Kach
-https://siliconangle.com/2020/03/11/ibm-enhances-watsons-natural-language-understanding-capabilities/,Mike Wheatley

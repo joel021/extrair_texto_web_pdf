@@ -1,13 +1,12 @@
 from requests import get
 from pattern3.web import plaintext
-import json
 import PyPDF2
 from googletrans import Translator
 
 class TextToJson():
 
         def save_json(self, to_path, title,author,body,url,type):
-                text_json = "{\n    \"title\": \"" + title + "\",\n    \"author\": \"" + author + "\",\n    \"body\": " + body + ",\n    \"type\": \""+type+"\",\n    \"url\": \"" + url + "\"\n}"
+                text_json = "{\n    \"title\": \"" + title + "\",\n    \"author\": \"" + author + "\",\n    \"body\": \"" + body + "\",\n    \"type\": \""+type+"\",\n    \"url\": \"" + url + "\"\n}"
                 file = open(to_path+"/" + title + "-" + author + ".json", "w")
                 file.write(text_json)
                 file.close()
@@ -30,17 +29,27 @@ class TextToJson():
                                 plan_text = self.translate(plan_text)
 
                         title = plan_text[0:10:1]
-                        plan_text = json.dumps(plan_text)
+                        plan_text = plan_text.replace('"',"\"").replace("\n", "\\n").replace("'","\'")
 
                         self.save_json('outputs/pdfs',title,url[1],plan_text,url[0],url[2])
                         print("feito: {}".format(title))
+
+        def get_text(self, html):
+                text = html
+                paragraphs = ""
+                while "<p>" in text:
+                        # step 1: encontrar começo de uma tag <p>
+                        text = text[text.index("<p>") + 3:len(text)]
+                        paragraphs = paragraphs + text[0:text.index("</p>")]
+                        text = text[text.index("</p>") + 4:len(text)]
+
+                return plaintext(paragraphs).replace('"', '\\"').replace("\n", "\\n")
 
         def from_web(self,input_file_urls, language):
 
                 urls = self.read_input_urls(input_file_urls)
                 for url in urls:
                         html_string = get(url[0]).text
-                        plan_text = plaintext(html_string)
                         title = "Title"
 
                         try:
@@ -48,10 +57,10 @@ class TextToJson():
                         except:
                                 pass
 
+                        plan_text = self.get_text(html_string)
                         if not 'pt' in language:
                                 plan_text = self.translate(plan_text)
 
-                        plan_text = json.dumps(plan_text)
                         self.save_json('outputs/web',title,url[1],plan_text,url[0],url[2])
 
                         print("feito: {}".format(title))
@@ -67,4 +76,3 @@ class TextToJson():
                                 line = fp.readline()
 
                         return urls
-
